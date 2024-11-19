@@ -1,0 +1,102 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:VirtualPathCore.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:views="clr-namespace:VirtualPathCore.Views"
+        mc:Ignorable="d" 
+        d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="VirtualPathCore.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/Logo.png"
+        Title="VirtualPathCore"
+        WindowState="Maximized">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+    <Grid Background="#1E1E1E">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>  <!-- 菜单栏 -->
+            <RowDefinition Height="*"/>     <!-- 剩余空间用于内容和边栏 -->
+        </Grid.RowDefinitions>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>  <!-- 左侧边栏 -->
+            <ColumnDefinition Width="*"/>     <!-- 内容区域 -->
+            <ColumnDefinition Width="250"/>  <!-- 右侧AI对话框 -->
+        </Grid.ColumnDefinitions>
+
+        <!-- 菜单栏 -->
+        <Border Background="#2A2A2A" Grid.ColumnSpan="3" CornerRadius="5">
+            <Menu Foreground="White" Background="Transparent" BorderThickness="0">
+                <MenuItem Header="文件" Background="#2A2A2A" Foreground="White">
+                    <MenuItem Header="新建工程" Command="{Binding OpenCreateProjectWindowCommand}"/>
+                    <MenuItem Header="打开工程"/>
+                    <MenuItem Header="保存工程"/>
+                    <MenuItem Header="退出"/>
+                </MenuItem>
+                <MenuItem Header="编辑" Background="#2A2A2A" Foreground="White">
+                    <MenuItem Header="撤销"/>
+                    <MenuItem Header="重做"/>
+                    <MenuItem Header="剪切"/>
+                    <MenuItem Header="复制"/>
+                    <MenuItem Header="粘贴"/>
+                </MenuItem>
+                <MenuItem Header="窗口" Background="#2A2A2A" Foreground="White">
+                    <MenuItem Header="布局"/>
+                    <MenuItem Header="重置布局"/>
+                    <MenuItem Header="显示/隐藏侧边栏" Click="ToggleSidebar"/>
+                    <MenuItem Header="切换侧边栏停靠位置" Click="ToggleDock"/>
+                </MenuItem>
+                <MenuItem Header="帮助" Background="#2A2A2A" Foreground="White">
+                    <MenuItem Header="文档"/>
+                    <MenuItem Header="关于"/>
+                </MenuItem>
+            </Menu>
+        </Border>
+        
+        <!-- 左侧边栏 -->
+        <Border x:Name="SidebarBorder" Background="#333333" Grid.Row="1" Grid.Column="0" CornerRadius="5" Margin="5">
+            <StackPanel HorizontalAlignment="Stretch" Spacing="10" Margin="10">
+                <TextBlock Text="项目文件夹" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+                
+                <TreeView ItemsSource="{Binding ProjectFolders}" SelectedItem="{Binding SelectedProjectFolder, Mode=TwoWay}">
+                    <TreeView.ItemTemplate>
+                        <TreeDataTemplate ItemsSource="{Binding SubFolders}">
+                            <TextBlock Text="{Binding Name}" Foreground="White" FontSize="14"/>
+                        </TreeDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
+            </StackPanel>
+        </Border>
+
+        <!-- 内容区域 -->
+		<Border x:Name="ContentBorder" Background="#222222" Grid.Row="1" Grid.Column="1" CornerRadius="5" Margin="5">
+				<views:MainView />
+		</Border>
+
+		<!-- 右侧AI对话框 -->
+        <Border x:Name="AIChatBorder" Background="#333333" Grid.Row="1" Grid.Column="2" CornerRadius="5" Margin="5">
+            <StackPanel Margin="10" Spacing="10" HorizontalAlignment="Center">
+                <TextBlock Text="AI 对话生成模型" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+        
+                <ComboBox Width="200" Height="35" Background="#444444" Foreground="White" CornerRadius="5" Padding="5"
+                          ItemsSource="{Binding ModelList}" 
+                          SelectedItem="{Binding SelectedModel}"
+                          SelectionChanged="ComboBox_SelectionChanged">
+                </ComboBox>
+
+                <!-- 模型预览图 -->
+                <Border BorderBrush="#222222" BorderThickness="2" CornerRadius="5" Margin="0,10">
+                    <Image Source="{Binding SelectedModelPreview}" Width="200" Height="100" Stretch="Uniform"/>
+                </Border>
+        
+                <TextBox Width="200" Height="35" Watermark="输入消息..." Background="#444444" Foreground="White" BorderThickness="0" CornerRadius="5" Padding="5"/>
+                <Button Content="发送" Width="200" Height="40" Background="#444444" Foreground="White" CornerRadius="5" FontWeight="Bold"/>
+            </StackPanel>
+        </Border>
+
+    </Grid>
+</Window>

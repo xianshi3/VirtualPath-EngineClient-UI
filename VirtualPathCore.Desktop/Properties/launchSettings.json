@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "VirtualPathCore.Desktop": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
