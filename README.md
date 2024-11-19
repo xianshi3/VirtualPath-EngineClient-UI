@@ -1,5 +1,4 @@
 # Project Advantages
-![0241119-100609](https://github.com/user-attachments/assets/c778ef02-572a-42e6-9e89-63ca7e93fbc0)
 
 1. **Flexible Architecture**: Utilizes the MVVM pattern, effectively separating view and logic for easier maintenance and extension.
 2. **Modern Interface**: Dark theme and intuitive layout enhance user experience.
@@ -12,7 +11,7 @@
 
 - Avalonia UI
 - C#
-- MVVM
+- C
 - OpenGL
-- Asynchronous Programming
-- Data Binding
+
+![0241119-100609](https://github.com/user-attachments/assets/c778ef02-572a-42e6-9e89-63ca7e93fbc0)
