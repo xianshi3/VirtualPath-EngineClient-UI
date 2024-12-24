@@ -7,6 +7,7 @@ using VirtualPathCore.Helpers;
 using Silk.NET.Maths;
 using Silk.NET.OpenGLES;
 using Shader = VirtualPathCore.Graphics.OpenGL.Shader;
+using VirtualPathCore.ViewModels;
 
 namespace VirtualPathCore.Services
 {
@@ -17,6 +18,9 @@ namespace VirtualPathCore.Services
     public class SimpleDrawingService : IDrawingService
     {
         #region Uniforms
+        /// <summary>
+        /// 统一变换结构体，包含模型、视图、投影矩阵等
+        /// </summary>
         private struct UniTransforms
         {
             public Matrix4X4<float> Model;
@@ -27,6 +31,9 @@ namespace VirtualPathCore.Services
             public Matrix4X4<float> WorldToObject;
         }
 
+        /// <summary>
+        /// 统一参数结构体，包含颜色等参数
+        /// </summary>
         private struct UniParameters
         {
             public Vector4D<float> Color;
@@ -35,6 +42,7 @@ namespace VirtualPathCore.Services
 
         private Renderer renderer = null!;
         private Camera camera = null!;
+        private MainViewModel viewModel = null!;
 
         #region Pipelines
         private RenderPipeline simplePipeline = null!;
@@ -54,7 +62,13 @@ namespace VirtualPathCore.Services
         /// <param name="args">绘图服务所需的参数</param>
         public void Load(object[] args)
         {
+            if (args.Length < 2)
+            {
+                throw new ArgumentException("Expected at least 2 arguments: Renderer and MainViewModel");
+            }
+
             renderer = (Renderer)args[0];
+            viewModel = (MainViewModel)args[1];
             camera = new Camera()
             {
                 Position = new Vector3D<float>(0.0f, 2.0f, 8.0f),
@@ -80,7 +94,10 @@ namespace VirtualPathCore.Services
         /// <param name="deltaSeconds">自上次更新以来经过的时间，以秒为单位</param>
         public void Update(double deltaSeconds)
         {
-            model = Matrix4X4.CreateFromAxisAngle(new Vector3D<float>(0.0f, 1.0f, 0.0f), (float)deltaSeconds);
+            model = Matrix4X4.CreateFromAxisAngle(new Vector3D<float>(0.0f, 1.0f, 0.0f), viewModel.RotationAngle) *
+                    Matrix4X4.CreateScale(viewModel.Scale) *
+                    Matrix4X4.CreateTranslation(new Vector3D<float>(viewModel.PositionX, viewModel.PositionY, viewModel.PositionZ));
+
             color = Vector4D.Lerp(Vector4D<float>.One, new Vector4D<float>(1.0f, 0.0f, 0.0f, 1.0f), (float)Math.Sin(deltaSeconds));
 
             camera.Width = (int)renderer.Bounds.Width;
@@ -100,7 +117,7 @@ namespace VirtualPathCore.Services
 
             // Cube
             {
-                Matrix4X4<float> m = model * Matrix4X4.CreateTranslation(new Vector3D<float>(0.0f, 0.0f, 0.0f));
+                Matrix4X4<float> m = model;
 
                 foreach (Mesh mesh in cubeMeshes)
                 {
@@ -131,78 +148,6 @@ namespace VirtualPathCore.Services
                     mesh.Draw();
 
                     solidColorPipeline.Unbind();
-                }
-            }
-
-            // Cube 1
-            {
-                Matrix4X4<float> m = model * Matrix4X4.CreateTranslation(new Vector3D<float>(-10.0f, 4.0f, -16.0f));
-
-                foreach (Mesh mesh in cubeMeshes)
-                {
-                    simplePipeline.Bind();
-
-                    simplePipeline.SetUniform(string.Empty, new UniTransforms()
-                    {
-                        Model = m,
-                        View = camera.View,
-                        Projection = camera.Projection,
-                        ObjectToWorld = m,
-                        ObjectToClip = m * camera.View * camera.Projection,
-                        WorldToObject = m.Invert()
-                    });
-
-                    simplePipeline.SetUniform(string.Empty, new UniParameters()
-                    {
-                        Color = Vector4D<float>.One
-                    });
-
-                    mesh.VertexAttributePointer((uint)simplePipeline.GetAttribLocation("In_Position"), 3, nameof(Vertex.Position));
-                    mesh.VertexAttributePointer((uint)simplePipeline.GetAttribLocation("In_Normal"), 3, nameof(Vertex.Normal));
-                    mesh.VertexAttributePointer((uint)simplePipeline.GetAttribLocation("In_Tangent"), 3, nameof(Vertex.Tangent));
-                    mesh.VertexAttributePointer((uint)simplePipeline.GetAttribLocation("In_Bitangent"), 3, nameof(Vertex.Bitangent));
-                    mesh.VertexAttributePointer((uint)simplePipeline.GetAttribLocation("In_Color"), 4, nameof(Vertex.Color));
-                    mesh.VertexAttributePointer((uint)simplePipeline.GetAttribLocation("In_TexCoord"), 2, nameof(Vertex.TexCoord));
-
-                    mesh.Draw();
-
-                    simplePipeline.Unbind();
-                }
-            }
-
-            // Cube 2
-            {
-                Matrix4X4<float> m = model * Matrix4X4.CreateTranslation(new Vector3D<float>(8.0f, 0.0f, -10.0f));
-
-                foreach (Mesh mesh in cubeMeshes)
-                {
-                    simplePipeline.Bind();
-
-                    simplePipeline.SetUniform(string.Empty, new UniTransforms()
-                    {
-                        Model = m,
-                        View = camera.View,
-                        Projection = camera.Projection,
-                        ObjectToWorld = m,
-                        ObjectToClip = m * camera.View * camera.Projection,
-                        WorldToObject = m.Invert()
-                    });
-
-                    simplePipeline.SetUniform(string.Empty, new UniParameters()
-                    {
-                        Color = Vector4D<float>.One
-                    });
-
-                    mesh.VertexAttributePointer((uint)simplePipeline.GetAttribLocation("In_Position"), 3, nameof(Vertex.Position));
-                    mesh.VertexAttributePointer((uint)simplePipeline.GetAttribLocation("In_Normal"), 3, nameof(Vertex.Normal));
-                    mesh.VertexAttributePointer((uint)simplePipeline.GetAttribLocation("In_Tangent"), 3, nameof(Vertex.Tangent));
-                    mesh.VertexAttributePointer((uint)simplePipeline.GetAttribLocation("In_Bitangent"), 3, nameof(Vertex.Bitangent));
-                    mesh.VertexAttributePointer((uint)simplePipeline.GetAttribLocation("In_Color"), 4, nameof(Vertex.Color));
-                    mesh.VertexAttributePointer((uint)simplePipeline.GetAttribLocation("In_TexCoord"), 2, nameof(Vertex.TexCoord));
-
-                    mesh.Draw();
-
-                    simplePipeline.Unbind();
                 }
             }
         }
