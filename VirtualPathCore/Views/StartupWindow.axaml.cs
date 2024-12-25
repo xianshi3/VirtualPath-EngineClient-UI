@@ -26,7 +26,7 @@ namespace VirtualPathCore
         /// </summary>
         private async void LoadMainPageAsync()
         {
-            await Task.Delay(500);
+            await Task.Delay(1000);
             var mainWindow = new MainWindow();
             mainWindow.Show();
             this.Close();
