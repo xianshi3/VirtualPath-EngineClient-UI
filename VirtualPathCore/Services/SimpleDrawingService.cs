@@ -53,7 +53,10 @@ namespace VirtualPathCore.Services
         private Mesh[] cubeMeshes = null!;
         #endregion
 
+        // 定义一个4x4的矩阵，初始化为单位矩阵，用于表示模型的变换（如平移、旋转、缩放等）
         private Matrix4X4<float> model = Matrix4X4<float>.Identity;
+
+        // 定义一个四维向量，表示颜色，初始化为红色（RGBA格式，1.0f表示完全不透明）
         private Vector4D<float> color = new(1.0f, 0.0f, 0.0f, 1.0f);
 
         /// <summary>
@@ -98,7 +101,7 @@ namespace VirtualPathCore.Services
 
             // 创建立方体网格
             MeshFactory.GetCube(out Vertex[] vertices, out uint[] indices);
-            cubeMeshes = new[] { new Mesh(renderer, vertices, indices) };
+            cubeMeshes = [new Mesh(renderer, vertices, indices)];
         }
 
         /// <summary>
@@ -125,7 +128,7 @@ namespace VirtualPathCore.Services
         {
             GL gl = renderer.GetContext();
 
-            gl.ClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+            //gl.ClearColor(0.2f, 0.2f, 0.2f, 1.0f); 
             gl.Clear((uint)GLEnum.ColorBufferBit | (uint)GLEnum.DepthBufferBit | (uint)GLEnum.StencilBufferBit);
 
             // 缓存属性位置
