@@ -62,28 +62,41 @@ namespace VirtualPathCore.Services
         /// <param name="args">绘图服务所需的参数</param>
         public void Load(object[] args)
         {
-            if (args.Length < 2)
+            // 参数校验
+            if (args == null || args.Length < 2)
             {
                 throw new ArgumentException("Expected at least 2 arguments: Renderer and MainViewModel");
             }
 
-            renderer = (Renderer)args[0];
-            viewModel = (MainViewModel)args[1];
-            camera = new Camera()
+            // 初始化渲染器和视图模型
+            renderer = args[0] as Renderer ?? throw new ArgumentException("First argument must be of type Renderer");
+            viewModel = args[1] as MainViewModel ?? throw new ArgumentException("Second argument must be of type MainViewModel");
+
+            // 初始化相机
+            camera = new Camera
             {
-                Position = new Vector3D<float>(0.0f, 2.0f, 8.0f),
+                Position = new Vector3D<float>(0.0f, 0.0f, 10.0f), 
                 Fov = 45.0f
             };
 
-            using Shader vs1 = new(renderer, ShaderType.VertexShader, File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Resources", "Shaders", "Simple.vert")));
-            using Shader fs1 = new(renderer, ShaderType.FragmentShader, File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Resources", "Shaders", "Simple.frag")));
-            simplePipeline = new RenderPipeline(renderer, vs1, fs1);
+            // 加载并编译着色器
+            string shaderPath = Path.Combine(AppContext.BaseDirectory, "Resources", "Shaders");
+            try
+            {
+                using Shader vs1 = new(renderer, ShaderType.VertexShader, File.ReadAllText(Path.Combine(shaderPath, "Simple.vert")));
+                using Shader fs1 = new(renderer, ShaderType.FragmentShader, File.ReadAllText(Path.Combine(shaderPath, "Simple.frag")));
+                simplePipeline = new RenderPipeline(renderer, vs1, fs1);
 
-            using Shader vs2 = new(renderer, ShaderType.VertexShader, File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Resources", "Shaders", "SolidColor.vert")));
-            using Shader fs2 = new(renderer, ShaderType.FragmentShader, File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Resources", "Shaders", "SolidColor.frag")));
+                using Shader vs2 = new(renderer, ShaderType.VertexShader, File.ReadAllText(Path.Combine(shaderPath, "SolidColor.vert")));
+                using Shader fs2 = new(renderer, ShaderType.FragmentShader, File.ReadAllText(Path.Combine(shaderPath, "SolidColor.frag")));
+                solidColorPipeline = new RenderPipeline(renderer, vs2, fs2);
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Failed to load or compile shaders", ex);
+            }
 
-            solidColorPipeline = new RenderPipeline(renderer, vs2, fs2);
-
+            // 创建立方体网格
             MeshFactory.GetCube(out Vertex[] vertices, out uint[] indices);
             cubeMeshes = new[] { new Mesh(renderer, vertices, indices) };
         }
