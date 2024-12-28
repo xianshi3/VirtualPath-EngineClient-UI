@@ -128,41 +128,53 @@ namespace VirtualPathCore.Services
             gl.ClearColor(0.2f, 0.2f, 0.2f, 1.0f);
             gl.Clear((uint)GLEnum.ColorBufferBit | (uint)GLEnum.DepthBufferBit | (uint)GLEnum.StencilBufferBit);
 
+            // 缓存属性位置
+            uint positionLoc = (uint)solidColorPipeline.GetAttribLocation("In_Position");
+            uint normalLoc = (uint)solidColorPipeline.GetAttribLocation("In_Normal");
+            uint tangentLoc = (uint)solidColorPipeline.GetAttribLocation("In_Tangent");
+            uint bitangentLoc = (uint)solidColorPipeline.GetAttribLocation("In_Bitangent");
+            uint colorLoc = (uint)solidColorPipeline.GetAttribLocation("In_Color");
+            uint texCoordLoc = (uint)solidColorPipeline.GetAttribLocation("In_TexCoord");
+
+            // 提前创建并复用对象
+            var transforms = new UniTransforms();
+            var parameters = new UniParameters { Color = color };
+
+            // 绑定 Pipeline
+            solidColorPipeline.Bind();
+
             // Cube
             {
                 Matrix4X4<float> m = model;
+                Matrix4X4<float> objectToClip = m * camera.View * camera.Projection;
+                Matrix4X4<float> worldToObject = m.Invert();
+
+                transforms.Model = m;
+                transforms.View = camera.View;
+                transforms.Projection = camera.Projection;
+                transforms.ObjectToWorld = m;
+                transforms.ObjectToClip = objectToClip;
+                transforms.WorldToObject = worldToObject;
+
+                solidColorPipeline.SetUniform(string.Empty, transforms);
+                solidColorPipeline.SetUniform(string.Empty, parameters);
 
                 foreach (Mesh mesh in cubeMeshes)
                 {
-                    solidColorPipeline.Bind();
-
-                    solidColorPipeline.SetUniform(string.Empty, new UniTransforms()
-                    {
-                        Model = m,
-                        View = camera.View,
-                        Projection = camera.Projection,
-                        ObjectToWorld = m,
-                        ObjectToClip = m * camera.View * camera.Projection,
-                        WorldToObject = m.Invert()
-                    });
-
-                    solidColorPipeline.SetUniform(string.Empty, new UniParameters()
-                    {
-                        Color = color
-                    });
-
-                    mesh.VertexAttributePointer((uint)solidColorPipeline.GetAttribLocation("In_Position"), 3, nameof(Vertex.Position));
-                    mesh.VertexAttributePointer((uint)solidColorPipeline.GetAttribLocation("In_Normal"), 3, nameof(Vertex.Normal));
-                    mesh.VertexAttributePointer((uint)solidColorPipeline.GetAttribLocation("In_Tangent"), 3, nameof(Vertex.Tangent));
-                    mesh.VertexAttributePointer((uint)solidColorPipeline.GetAttribLocation("In_Bitangent"), 3, nameof(Vertex.Bitangent));
-                    mesh.VertexAttributePointer((uint)solidColorPipeline.GetAttribLocation("In_Color"), 4, nameof(Vertex.Color));
-                    mesh.VertexAttributePointer((uint)solidColorPipeline.GetAttribLocation("In_TexCoord"), 2, nameof(Vertex.TexCoord));
+                    mesh.VertexAttributePointer(positionLoc, 3, nameof(Vertex.Position));
+                    mesh.VertexAttributePointer(normalLoc, 3, nameof(Vertex.Normal));
+                    mesh.VertexAttributePointer(tangentLoc, 3, nameof(Vertex.Tangent));
+                    mesh.VertexAttributePointer(bitangentLoc, 3, nameof(Vertex.Bitangent));
+                    mesh.VertexAttributePointer(colorLoc, 4, nameof(Vertex.Color));
+                    mesh.VertexAttributePointer(texCoordLoc, 2, nameof(Vertex.TexCoord));
 
                     mesh.Draw();
-
-                    solidColorPipeline.Unbind();
                 }
             }
+
+            // 解绑 Pipeline
+            solidColorPipeline.Unbind();
         }
+
     }
 }
