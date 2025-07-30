@@ -2,48 +2,61 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="VirtualPathCore.StartupWindow"
         Title="Virtual Path"
-        Width="800" Height="600"
-        Background="#2E2E2E"
-        SizeChanged="OnSizeChanged">
+        Width="800"
+        Height="600"
+        Background="Transparent"
+        CanResize="True"
+        WindowStartupLocation="CenterScreen"
+        SizeChanged="OnSizeChanged"
+        SystemDecorations="None">
+
 	<Window.Resources>
-		<!-- 定义渐变背景资源 -->
+		<!-- 灰色渐变背景 -->
 		<LinearGradientBrush x:Key="BackgroundGradient" StartPoint="0,0" EndPoint="0,1">
-			<GradientStop Offset="0" Color="#4E4E4E"/>
-			<GradientStop Offset="1" Color="#2E2E2E"/>
+			<GradientStop Offset="0" Color="#4E4E4E" />
+			<GradientStop Offset="1" Color="#2E2E2E" />
+		</LinearGradientBrush>
+
+		<!-- 文字渐变颜色 -->
+		<LinearGradientBrush x:Key="TextGradient" StartPoint="0,0" EndPoint="1,0">
+			<GradientStop Offset="0" Color="#CCCCCC" />
+			<GradientStop Offset="1" Color="#EEEEEE" />
 		</LinearGradientBrush>
 	</Window.Resources>
+
 	<Grid Background="{StaticResource BackgroundGradient}">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<RowDefinition Height="*"/>
-			<RowDefinition Height="Auto"/>
-		</Grid.RowDefinitions>
-		<!-- Logo图片 -->
-		<Image x:Name="LogoImage"
-               Source="avares://VirtualPathCore/Assets/Logo.png"
-               Grid.Row="0"
-               HorizontalAlignment="Center"
-               VerticalAlignment="Top"
-               Width="300"
-               Height="200"
-               Margin="0,20,0,0"/>
-		<!-- 欢迎文本 -->
-		<TextBlock x:Name="WelcomeText"
-                   Text="欢迎使用 Virtual Path 3D引擎"
-                   Grid.Row="1"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="24"
-                   Foreground="White"
-                   Margin="0,20,0,0"/>
-		<!-- 版本信息 -->
+		<StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="20" Margin="40,0">
+			<!-- Logo 图片，带阴影和缩放中心 -->
+			<Image x:Name="LogoImage"
+				   Source="avares://VirtualPathCore/Assets/Logo.png"
+				   Width="300"
+				   Height="200"
+				   RenderTransformOrigin="0.5,0.5">
+				<Image.RenderTransform>
+					<ScaleTransform />
+				</Image.RenderTransform>
+				<Image.Effect>
+					<DropShadowEffect Color="#66000000" BlurRadius="15" Opacity="0.7" />
+				</Image.Effect>
+			</Image>
+
+			<!-- 欢迎文本 -->
+			<TextBlock x:Name="WelcomeText"
+					   Text="欢迎使用 Virtual Path 3D 引擎"
+					   FontSize="28"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   FontWeight="SemiBold"
+					   Foreground="{StaticResource TextGradient}" />
+		</StackPanel>
+
+		<!-- 版本信息，右下角 -->
 		<TextBlock x:Name="VersionText"
-                   Text="版本 0.0.1"
-                   Grid.Row="2"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="14"
-                   Foreground="Gray"
-                   Margin="0,20,0,20"/>
+				   Text="版本 0.0.1"
+				   FontSize="14"
+				   Foreground="#999999"
+				   HorizontalAlignment="Right"
+				   VerticalAlignment="Bottom"
+				   Margin="0,0,15,15" />
 	</Grid>
 </Window>
