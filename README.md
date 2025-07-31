@@ -5,6 +5,8 @@
 This project is a cross-platform desktop drawing application built on the Avalonia UI framework using C#. It integrates high-performance OpenGL rendering and employs a modern MVVM (Model-View-ViewModel) architecture to deliver a flexible, extensible, and user-friendly experience. The application supports multiple custom drawing services, providing a dynamic and personalized interface layout with rich interactive capabilities.
 
 
+<img width="1000" height="750" alt="QQ20250731-120636" src="https://github.com/user-attachments/assets/5cc7c503-105e-431e-b3c9-3776e36c87ab" />
+
 
 ## Technology Stack
 
@@ -13,6 +15,7 @@ This project is a cross-platform desktop drawing application built on the Avalon
 - **OpenGL**: A high-performance graphics rendering API enabling real-time complex visualizations.
 - **MVVM Architecture**: Separates UI from business logic to enhance maintainability, testability, and modularity.
 
+<img width="1896" height="954" alt="QQ20250731-120703" src="https://github.com/user-attachments/assets/d25ec287-d6cc-46b4-8cd1-0a2227b791e9" />
 
 
 ## Key Advantages
@@ -45,7 +48,7 @@ Supports embedding AI-based conversation generation models to enhance interactiv
 
 ## Application Scenarios
 
-- Suitable for professional drawing, graphic design, and real-time rendering tasks.
+- Suitable for professional drawing, graphic design, 和 real-time rendering tasks.
 - Ideal for desktop applications requiring cross-platform compatibility.
 - Provides extensive customization options for enterprise-level or R&D users.
 
