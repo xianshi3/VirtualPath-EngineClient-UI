@@ -11,43 +11,43 @@
         ShowInTaskbar="False"
         Topmost="False"
         Icon="/Assets/Const.png"
-        Title="新建工程"
+        Title="Create New Project"
         >
-    <Window.DataContext>
-        <viewModels:CreateProjectViewModel />
-    </Window.DataContext>
-    <Grid Margin="20">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+	<Window.DataContext>
+		<viewModels:CreateProjectViewModel />
+	</Window.DataContext>
+	<Grid Margin="20">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
 
-        <TextBlock Text="项目名称:" Grid.Row="0" Grid.Column="0" Margin="0,0,10,10" Foreground="White" VerticalAlignment="Center"/>
-        <TextBox Name="ProjectName" Grid.Row="0" Grid.Column="1" Margin="0,0,0,10" Background="#444444" Foreground="White" BorderBrush="#666666" VerticalAlignment="Center"/>
+		<TextBlock Text="Project Name:" Grid.Row="0" Grid.Column="0" Margin="0,0,10,10" Foreground="White" VerticalAlignment="Center"/>
+		<TextBox Name="ProjectName" Grid.Row="0" Grid.Column="1" Margin="0,0,0,10" Background="#444444" Foreground="White" BorderBrush="#666666" VerticalAlignment="Center"/>
 
-        <TextBlock Text="项目描述:" Grid.Row="1" Grid.Column="0" Margin="0,0,10,10" Foreground="White" VerticalAlignment="Center"/>
-        <TextBox Name="ProjectDescription" Grid.Row="1" Grid.Column="1" Margin="0,0,0,10" TextWrapping="Wrap" Background="#444444" Foreground="White" BorderBrush="#666666" VerticalAlignment="Center"/>
+		<TextBlock Text="Project Description:" Grid.Row="1" Grid.Column="0" Margin="0,0,10,10" Foreground="White" VerticalAlignment="Center"/>
+		<TextBox Name="ProjectDescription" Grid.Row="1" Grid.Column="1" Margin="0,0,0,10" TextWrapping="Wrap" Background="#444444" Foreground="White" BorderBrush="#666666" VerticalAlignment="Center"/>
 
-        <TextBlock Text="项目路径:" Grid.Row="2" Grid.Column="0" Margin="0,0,10,10" Foreground="White" VerticalAlignment="Center"/>
-        <Grid Grid.Row="2" Grid.Column="1" Margin="0,0,0,10">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
+		<TextBlock Text="Project Path:" Grid.Row="2" Grid.Column="0" Margin="0,0,10,10" Foreground="White" VerticalAlignment="Center"/>
+		<Grid Grid.Row="2" Grid.Column="1" Margin="0,0,0,10">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="*"/>
+				<ColumnDefinition Width="Auto"/>
+			</Grid.ColumnDefinitions>
 
-            <TextBox Name="ProjectPath" Grid.Column="0" Margin="0,0,10,0" Background="#444444" Foreground="White" BorderBrush="#666666" VerticalAlignment="Center"/>
-            <Button Content="选择路径" Grid.Column="1" Width="100" Margin="0,0,0,0" Command="{Binding SelectProjectPathCommand}" Background="#555555" Foreground="White" BorderBrush="#666666" VerticalAlignment="Center"/>
-        </Grid>
+			<TextBox Name="ProjectPath" Grid.Column="0" Margin="0,0,10,0" Background="#444444" Foreground="White" BorderBrush="#666666" VerticalAlignment="Center"/>
+			<Button Content="Select Path" Grid.Column="1" Width="100" Margin="0,0,0,0" Command="{Binding SelectProjectPathCommand}" Background="#555555" Foreground="White" BorderBrush="#666666" VerticalAlignment="Center"/>
+		</Grid>
 
-        <Button Content="创建" Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="100" Margin="0,10,0,0" Command="{Binding CreateProjectCommand}" Background="#555555" Foreground="White" BorderBrush="#666666" VerticalAlignment="Center"/>
-    </Grid>
+		<Button Content="Create" Grid.Row="6" Grid.ColumnSpan="2" HorizontalAlignment="Right" Width="100" Margin="0,10,0,0" Command="{Binding CreateProjectCommand}" Background="#555555" Foreground="White" BorderBrush="#666666" VerticalAlignment="Center"/>
+	</Grid>
 </Window>

@@ -35,25 +35,25 @@ namespace VirtualPathCore.ViewModels
             // 模拟项目文件夹结构
             ProjectFolders = new ObservableCollection<ProjectFolder>
             {
-                new ProjectFolder("工程A")
+                new ProjectFolder("Project A")
                 {
                     SubFolders =
                     {
-                        new ProjectFolder("文件夹A1"),
-                        new ProjectFolder("文件夹A2"),
+                        new ProjectFolder("Folder A1"),
+                        new ProjectFolder("Folder A2"),
                     }
                 },
-                new ProjectFolder("工程B")
+                new ProjectFolder("Project B")
                 {
                     SubFolders =
                     {
-                        new ProjectFolder("文件夹B1"),
-                        new ProjectFolder("文件夹B2")
+                        new ProjectFolder("Folder B1"),
+                        new ProjectFolder("Folder B2")
                         {
                             SubFolders =
                             {
-                                new ProjectFolder("文件夹B2-a"),
-                                new ProjectFolder("文件夹B2-b")
+                                new ProjectFolder("Folder B2-a"),
+                                new ProjectFolder("Folder B2-b")
                             }
                         }
                     }
@@ -63,9 +63,9 @@ namespace VirtualPathCore.ViewModels
             // 初始化模型列表
             ModelList = new ObservableCollection<string>
             {
-                "模型1",
-                "模型2",
-                "模型3"
+                "Model 1",
+                "Model 2",
+                "Model 3"
             };
 
             SelectedModel = ModelList[0]; // 默认选中第一个模型

@@ -42,7 +42,7 @@
 
 			<!-- 欢迎文本 -->
 			<TextBlock x:Name="WelcomeText"
-					   Text="欢迎使用 Virtual Path 3D 引擎"
+					   Text="Virtual Path 3D Engine"
 					   FontSize="28"
 					   HorizontalAlignment="Center"
 					   VerticalAlignment="Center"
@@ -52,7 +52,7 @@
 
 		<!-- 版本信息，右下角 -->
 		<TextBlock x:Name="VersionText"
-				   Text="版本 0.0.1"
+				   Text="Version 0.0.1"
 				   FontSize="14"
 				   Foreground="#999999"
 				   HorizontalAlignment="Right"

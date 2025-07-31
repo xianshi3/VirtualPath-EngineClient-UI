@@ -75,7 +75,7 @@ namespace VirtualPathCore.ViewModels
             if (string.IsNullOrEmpty(ProjectPath))
             {
                 // 显示错误信息提示用户输入项目路径
-                var messageBox = MessageBoxManager.GetMessageBoxStandard("错误", "项目路径不能为空", ButtonEnum.Ok, Icon.Error);
+                var messageBox = MessageBoxManager.GetMessageBoxStandard("Error", "Project path cannot be empty", ButtonEnum.Ok, Icon.Error);
                 await messageBox.ShowAsync();
                 return;
             }
@@ -86,11 +86,11 @@ namespace VirtualPathCore.ViewModels
             // 检查并设置默认项目名称和描述
             if (string.IsNullOrEmpty(ProjectName))
             {
-                ProjectName = "默认项目名称"; // 默认项目名称值
+                ProjectName = "Default Project Name"; // 默认项目名称值
             }
             if (string.IsNullOrEmpty(ProjectDescription))
             {
-                ProjectDescription = "默认项目描述"; // 默认项目描述值
+                ProjectDescription = "Default Project Description"; // 默认项目描述值
             }
 
             // 在项目目录中创建项目配置文件
@@ -118,7 +118,7 @@ namespace VirtualPathCore.ViewModels
             Console.WriteLine("SelectProjectPath command triggered");
             var dialog = new OpenFolderDialog
             {
-                Title = "选择项目保存路径",
+                Title = "Select Project Save Path",
                 Directory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) // 默认目录为我的文档
             };
 

@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="VirtualPathCore.Views.Components.AppMenu">
+
+	<Border Background="#2A2A2A" CornerRadius="5">
+		<Menu Foreground="White" Background="Transparent" BorderThickness="0">
+			<MenuItem Header="File" Background="#2A2A2A" Foreground="White">
+				<MenuItem Header="New Project" Command="{Binding OpenCreateProjectWindowCommand}"/>
+				<MenuItem Header="Open Project"/>
+				<MenuItem Header="Save Project"/>
+				<MenuItem Header="Exit"/>
+			</MenuItem>
+
+			<MenuItem Header="Edit" Background="#2A2A2A" Foreground="White">
+				<MenuItem Header="Undo"/>
+				<MenuItem Header="Redo"/>
+				<MenuItem Header="Cut"/>
+				<MenuItem Header="Copy"/>
+				<MenuItem Header="Paste"/>
+			</MenuItem>
+
+			<MenuItem Header="Window" Background="#2A2A2A" Foreground="White">
+				<MenuItem Header="Layout"/>
+				<MenuItem Header="Reset Layout"/>
+				<MenuItem Header="Toggle Sidebar" Click="ToggleSidebar"/>
+				<MenuItem Header="Toggle Sidebar Dock" Click="ToggleDock"/>
+			</MenuItem>
+
+			<MenuItem Header="Help" Background="#2A2A2A" Foreground="White">
+				<MenuItem Header="Documentation"/>
+				<MenuItem Header="About"/>
+			</MenuItem>
+		</Menu>
+	</Border>
+
+</UserControl>

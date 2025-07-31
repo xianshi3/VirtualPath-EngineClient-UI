@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:VirtualPathCore.ViewModels"
         xmlns:views="clr-namespace:VirtualPathCore.Views"
+        xmlns:components="clr-namespace:VirtualPathCore.Views.Components"
         x:Class="VirtualPathCore.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/Logo.png"
@@ -20,34 +21,10 @@
 			<ColumnDefinition Width="250"/>
 		</Grid.ColumnDefinitions>
 
-		<!-- 菜单栏 -->
-		<Border Background="#2A2A2A" Grid.ColumnSpan="3" CornerRadius="5">
-			<Menu Foreground="White" Background="Transparent" BorderThickness="0">
-				<MenuItem Header="文件" Background="#2A2A2A" Foreground="White">
-					<MenuItem Header="新建工程" Command="{Binding OpenCreateProjectWindowCommand}"/>
-					<MenuItem Header="打开工程"/>
-					<MenuItem Header="保存工程"/>
-					<MenuItem Header="退出"/>
-				</MenuItem>
-				<MenuItem Header="编辑" Background="#2A2A2A" Foreground="White">
-					<MenuItem Header="撤销"/>
-					<MenuItem Header="重做"/>
-					<MenuItem Header="剪切"/>
-					<MenuItem Header="复制"/>
-					<MenuItem Header="粘贴"/>
-				</MenuItem>
-				<MenuItem Header="窗口" Background="#2A2A2A" Foreground="White">
-					<MenuItem Header="布局"/>
-					<MenuItem Header="重置布局"/>
-					<MenuItem Header="显示/隐藏侧边栏" Click="ToggleSidebar"/>
-					<MenuItem Header="切换侧边栏停靠位置" Click="ToggleDock"/>
-				</MenuItem>
-				<MenuItem Header="帮助" Background="#2A2A2A" Foreground="White">
-					<MenuItem Header="文档"/>
-					<MenuItem Header="关于"/>
-				</MenuItem>
-			</Menu>
-		</Border>
+		<!-- 封装后的菜单栏组件 -->
+		<components:AppMenu Grid.ColumnSpan="3" Grid.Row="0"
+							ToggleSidebarClicked="ToggleSidebar"
+							ToggleDockClicked="ToggleDock"/>
 
 		<!-- 左侧项目文件夹树 -->
 		<Border x:Name="SidebarBorder" Background="#333333" Grid.Row="1" Grid.Column="0" CornerRadius="5" Margin="5">
