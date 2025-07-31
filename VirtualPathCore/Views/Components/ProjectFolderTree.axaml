@@ -1,0 +1,16 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:VirtualPathCore.ViewModels"
+             x:Class="VirtualPathCore.Views.ProjectFolderTree"
+             x:DataType="vm:MainWindowViewModel">
+	<StackPanel HorizontalAlignment="Stretch" Spacing="10" Margin="10">
+		<TextBlock Text="项目文件夹" Foreground="White" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center"/>
+		<TreeView ItemsSource="{Binding ProjectFolders}" SelectedItem="{Binding SelectedProjectFolder, Mode=TwoWay}">
+			<TreeView.ItemTemplate>
+				<TreeDataTemplate ItemsSource="{Binding SubFolders}">
+					<TextBlock Text="{Binding Name}" Foreground="White" FontSize="14"/>
+				</TreeDataTemplate>
+			</TreeView.ItemTemplate>
+		</TreeView>
+	</StackPanel>
+</UserControl>
