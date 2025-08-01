@@ -15,9 +15,7 @@ This project is a cross-platform desktop drawing application built on the Avalon
 | Technology         | Description                                                                                   |
 | ------------------ | --------------------------------------------------------------------------------------------- |
 | **Avalonia UI**    | Cross-platform desktop UI framework for Windows, Linux, and macOS with responsive design     |
-| **C#**             | Object-oriented and asynchronous programming language ensuring maintainability and scalability|
 | **OpenGL**         | High-performance graphics rendering API enabling real-time complex visualizations             |
-| **MVVM Architecture** | Separates UI from business logic to improve maintainability, testability, and modularity     |
 
 <img width="1896" height="954" alt="QQ20250731-120703" src="https://github.com/user-attachments/assets/d25ec287-d6cc-46b4-8cd1-0a2227b791e9" />
 
@@ -38,7 +36,7 @@ This project is a cross-platform desktop drawing application built on the Avalon
 ### 3. Modern Interface and Intuitive Interaction
 
 > Employs a dark theme with a clean, card-style layout that is both professional and visually appealing.  
-> The bottom control panel provides real-time adjustment of parameters such as rotation angle, scale, and 3D position, ensuring smooth and intuitive user interaction.
+> The bottom control panel provides real-time adjustment of parameters such as rotation angle, scale, 和 3D position, ensuring smooth and intuitive user interaction.
 
 ### 4. Strong Extensibility
 
@@ -46,7 +44,7 @@ This project is a cross-platform desktop drawing application built on the Avalon
 
 ### 5. Dynamic and Personalized Layout
 
-> Users can freely adjust sidebars, dialogs, and main rendering areas to create a personalized workspace that improves efficiency and suits individual workflows.
+> Users can freely adjust sidebars, dialogs, 和 main rendering areas to create a personalized workspace that improves efficiency and suits individual workflows.
 
 ### 6. Integrated Intelligent Interaction Models
 
